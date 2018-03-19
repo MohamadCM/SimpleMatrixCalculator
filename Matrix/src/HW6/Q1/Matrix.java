@@ -1,5 +1,6 @@
 package HW6.Q1;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This class keeps the matrix and
@@ -81,6 +82,14 @@ public class Matrix {
     }
 
     /**
+     * Setting a new ArrayList of ArrayList of Double for current Matrix
+     * @param matrix is give ArrayList of ArrayList of Double
+     */
+    public void setMatrix(ArrayList<ArrayList<Double>> matrix) {
+        this.matrix = matrix;
+    }
+
+    /**
      * Calculates summation of two matrices and returns the result as another matrix
      * @param matrix2 is given matrix to apply summation operation
      * @return result as another Matrix
@@ -101,7 +110,7 @@ public class Matrix {
      * Calculates multiply of number and a Matrix
      * Returns result as another Matrix
      * @param num is number to append to Matrix
-     * @return result Matrix
+     * @return result Matrix {@code null} if the operation isn't allowed
      */
     public Matrix multiplyByNumber(double num)
     {
@@ -115,7 +124,7 @@ public class Matrix {
     /**
      * Calculates subtract of two matrices and returns the result as another matrix
      * @param matrix2 is given matrix to apply subtraction operation
-     * @return result as another Matrix
+     * @return result as another Matrix {@code null} if the operation isn't allowed
      */
     public Matrix sub(Matrix matrix2)
     {
@@ -124,5 +133,32 @@ public class Matrix {
             return null;
         }
         return this.sum(matrix2.multiplyByNumber(-1));
+    }
+
+    /**
+     * Calculates multiplication of two matrices and returns the result as another matrix
+     * @param matrix2 is given matrix to apply subtraction operation
+     * @return result as another Matrix {@code null} if the operation isn't allowed
+     */
+    public Matrix multiply(Matrix matrix2)
+    {
+        if(this.numberOfColumns() != matrix2.numberOfRows()) {
+            System.out.println("Wrong operation!");
+            return null;
+        }
+        ArrayList<ArrayList<Double>> resultArrayList = new ArrayList<ArrayList<Double>>();
+        for (int i = 0; i < this.numberOfRows(); i++) {
+            resultArrayList.add(new ArrayList<Double>());
+            for(int j = 0; j < matrix2.numberOfColumns(); j++) {
+                double resKeeper = 0;
+                for(int k = 0; k < this.numberOfColumns(); k++) {
+                    resKeeper += this.getMatrix().get(i).get(k) * matrix2.getMatrix().get(k).get(j);
+                }
+                resultArrayList.get(i).add(resKeeper);
+            }
+        }
+        Matrix result = new Matrix();
+        result.setMatrix(resultArrayList);
+        return result;
     }
 }
