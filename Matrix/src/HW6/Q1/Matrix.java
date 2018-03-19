@@ -112,6 +112,7 @@ public class Matrix {
     /**
      * Calculates multiply of number and a Matrix
      * Returns result as another Matrix
+     * Subtraction is done by this method too
      * @param num is number to append to Matrix
      * @return result Matrix {@code null} if the operation isn't allowed
      */
@@ -126,20 +127,6 @@ public class Matrix {
         }
         result.setMatrix(resultArrayList);
         return result;
-    }
-
-    /**
-     * Calculates subtract of two matrices and returns the result as another matrix
-     * @param matrix2 is given matrix to apply subtraction operation
-     * @return result as another Matrix {@code null} if the operation isn't allowed
-     */
-    public Matrix sub(Matrix matrix2)
-    {
-        if ((matrix.size() != matrix2.numberOfRows()) || (matrix.get(0).size() != matrix2.numberOfColumns())) {
-            System.out.println("Wrong operation!");
-            return null;
-        }
-        return this.sum(matrix2.multiplyByNumber(-1));
     }
 
     /**

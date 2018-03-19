@@ -73,18 +73,18 @@ public class TextProcessor {
      * @return int integer depending on situation of ‫‪polynomial‬‬ ‫‪expression
      */
     public int situationFinder(String string) {
-        if (string.contains("*"))
+        if (string.contains("*") && string.contains("X") && string.contains("Y"))
             return 3;
-        if (string.contains("+"))
+        if (string.contains("+")  && string.contains("X") && string.contains("Y"))
             return 4;
-        if (string.contains("-"))
+        if (string.indexOf("-", string.indexOf("X") + 1) != -1  && string.contains("X") && string.contains("Y"))
             return 5;
+        if( ( !string.contains("Y") ) && ( !string.contains("X") ) )
+            return -1;
         if (! (string.contains("Y")))
             return 1;
         if (! (string.contains("X")))
             return 2;
-        if( ( !string.contains("Y") ) && ( !string.contains("X") ) )
-            return -1;
         return 0;
     }
 
@@ -135,19 +135,24 @@ public class TextProcessor {
         double flag = 1;
         if ((str.contains("Y"))) {
             String tempString = "";
-            if (str.charAt(str.indexOf("Y") -1) == ')') {
-                for (int i = str.indexOf("-", str.indexOf("X") + 1) + 1 ; str.charAt(i) != ')'; i++)
+            if (str.charAt(str.indexOf("Y") - 1) == ')') {
+                for (int i = str.indexOf("-", str.indexOf("(",str.indexOf("X")) + 1) + 1 ; str.charAt(i) != ')'; i++)
                     tempString += String.valueOf(str.charAt(i));
                 flag = -1;
             }
             else {
                 if (str.indexOf("-", str.indexOf("X") + 1) != -1) {
-                    for (int i = str.indexOf("-", str.indexOf("X") + 1) + 1 ; str.charAt(i) != 'Y'; i++)
+                    for (int i = str.indexOf("-", str.indexOf("X") + 1) ; str.charAt(i) != 'Y'; i++)
                         tempString += String.valueOf(str.charAt(i));
-                    flag = -1;
+                    String tempString2 = "";
+                    for(int i = 0; i < tempString.length() ; i++)
+                        if((tempString.charAt(i) >= '0' & tempString.charAt(i) <= '9') || tempString.charAt(i) == '.')
+                            tempString2 += String.valueOf(tempString.charAt(i));
+                    tempString = tempString2;
+                    //flag = -1;
                 }
                 else {
-                    for (int i = str.indexOf("X"); str.charAt(i) != 'Y'; i++)
+                    for (int i = str.indexOf("X") + 2 ; str.charAt(i) != 'Y'; i++)
                         tempString += String.valueOf(str.charAt(i));
                     String tempString2 = "";
                     for(int i = 0; i < tempString.length() ; i++)
@@ -157,7 +162,7 @@ public class TextProcessor {
                 }
             }
             if(tempString.length() == 0)
-                return 1;
+                return 1 * flag;
             result = Double.parseDouble(tempString) * flag;
             return result;
         }

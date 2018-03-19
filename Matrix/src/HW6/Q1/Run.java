@@ -30,7 +30,10 @@ public class Run {
                 X.multiplyByNumber(textProcessor.factorOfXFinder(str)).print();
                 break;
             case (2):
-                Y.multiplyByNumber(textProcessor.factorOfYFinder("0X" + str)).print();
+                if(str.charAt(0) == '-')
+                    Y.multiplyByNumber(-textProcessor.factorOfYFinder("0X  + " + str)).print();
+                else
+                    Y.multiplyByNumber(textProcessor.factorOfYFinder("0X + " + str)).print();
                 break;
             case (3):
                 if(X.multiply(Y) != null)
@@ -41,8 +44,8 @@ public class Run {
                     X.multiplyByNumber(a).sum(Y.multiplyByNumber(b)).print();
                 break;
             case (5):
-                if(X.sub(Y) != null)
-                    X.multiplyByNumber(a).sum(Y.multiplyByNumber(b)).print();
+                if(X.sum(Y) != null)
+                    X.multiplyByNumber(a).sum(Y.multiplyByNumber(-b)).print();
                 break;
             default:
                 System.out.println("Wrong input!");
