@@ -1,6 +1,5 @@
 package HW6.Q1;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * This class keeps the matrix and
@@ -99,10 +98,14 @@ public class Matrix {
             System.out.println("Wrong operation!");
             return null;
         }
-        Matrix result = matrix2;
-        for (int i = 0; i < matrix.size(); i++)
+        Matrix result = new Matrix();
+        ArrayList<ArrayList<Double>> resultArrayList = new ArrayList<ArrayList<Double>>();
+        for (int i = 0; i < matrix.size(); i++) {
+            resultArrayList.add(new ArrayList<Double>());
             for (int j = 0; j < matrix.get(0).size(); j++)
-                result.getMatrix().get(i).set( j , matrix.get(i).get(j) + matrix2.getMatrix().get(i).get(j));
+                resultArrayList.get(i).add(matrix.get(i).get(j) + matrix2.getMatrix().get(i).get(j));
+        }
+        result.setMatrix(resultArrayList);
         return result;
     }
 
@@ -114,10 +117,14 @@ public class Matrix {
      */
     public Matrix multiplyByNumber(double num)
     {
-        Matrix result = this;
-        for (int i = 0; i < matrix.size(); i++)
+        Matrix result = new Matrix();
+        ArrayList<ArrayList<Double>> resultArrayList = new ArrayList<ArrayList<Double>>();
+        for (int i = 0; i < matrix.size(); i++) {
+            resultArrayList.add(new ArrayList<Double>()) ;
             for (int j = 0; j < matrix.get(0).size(); j++)
-                result.getMatrix().get(i).set( j , num * matrix.get(i).get(j));
+                resultArrayList.get(i).add(num * matrix.get(i).get(j));
+        }
+        result.setMatrix(resultArrayList);
         return result;
     }
 

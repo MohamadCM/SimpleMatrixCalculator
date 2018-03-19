@@ -73,16 +73,18 @@ public class TextProcessor {
      * @return int integer depending on situation of ‫‪polynomial‬‬ ‫‪expression
      */
     public int situationFinder(String string) {
-        if (!(string.contains("y") || string.contains("Y")))
-            return 1;
-        if (!(string.contains("X") || string.contains("X")))
-            return 2;
         if (string.contains("*"))
             return 3;
         if (string.contains("+"))
             return 4;
         if (string.contains("-"))
             return 5;
+        if (! (string.contains("Y")))
+            return 1;
+        if (! (string.contains("X")))
+            return 2;
+        if( ( !string.contains("Y") ) && ( !string.contains("X") ) )
+            return -1;
         return 0;
     }
 
@@ -112,6 +114,8 @@ public class TextProcessor {
                     for (int i = 0; str.charAt(i) != 'X'; i++)
                         tempString += String.valueOf(str.charAt(i));
             }
+            if(tempString.length() == 0)
+                return 1;
             result = Double.parseDouble(tempString) * flag;
             return result;
         }
@@ -152,6 +156,8 @@ public class TextProcessor {
                     tempString = tempString2;
                 }
             }
+            if(tempString.length() == 0)
+                return 1;
             result = Double.parseDouble(tempString) * flag;
             return result;
         }
