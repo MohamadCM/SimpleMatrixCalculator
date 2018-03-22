@@ -20,8 +20,6 @@ public class Run {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         str.replaceAll("\\s+","");
-        double a = textProcessor.factorOfXFinder(str);
-        double b = textProcessor.factorOfYFinder(str);
         switch (textProcessor.situationFinder(str))
         {
             case (-1):
@@ -38,15 +36,15 @@ public class Run {
                 break;
             case (3):
                 if(X.multiply(Y) != null)
-                    X.multiplyByNumber(a).multiply(Y.multiplyByNumber(b)).print();
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).multiply(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
                 break;
             case (4):
                 if(X.sum(Y) != null)
-                    X.multiplyByNumber(a).sum(Y.multiplyByNumber(b)).print();
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
                 break;
             case (5):
                 if(X.sum(Y) != null)
-                    X.multiplyByNumber(a).sum(Y.multiplyByNumber(-b)).print();
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(-textProcessor.factorOfYFinder(str))).print();
                 break;
             default:
                 System.out.println("Wrong input!");

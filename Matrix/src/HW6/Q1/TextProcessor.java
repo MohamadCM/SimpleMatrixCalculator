@@ -26,6 +26,7 @@ public class TextProcessor {
             tempString = scanner.nextLine();
             if (tempString.equals(""))
                 break;
+            tempString.replaceAll("\\s+","");
             str.add(tempString);
         }
         return str;
@@ -99,7 +100,7 @@ public class TextProcessor {
         double flag = 1;
         if ((str.contains("X"))) {
             String tempString = "";
-            if (str.charAt(str.indexOf("X") - 1) == ')') {
+            if (str.charAt(0) != 'X' && str.charAt(str.indexOf("X") - 1) == ')') {
                 for (int i = 2; str.charAt(i) != ')'; i++)
                     tempString += String.valueOf(str.charAt(i));
                 flag = -1;
@@ -170,4 +171,15 @@ public class TextProcessor {
         return 0;
     }
 
+    /**
+     * Checks the string, if X comes first return {@code true}
+     * @param str is given String to check
+     * @return if X comes first return {@code true}
+     */
+    public boolean xComesFirst(String str)
+    {
+        if(str.indexOf("X",str.indexOf("Y")+1) == -1)
+            return true;
+        return false;
+    }
 }
