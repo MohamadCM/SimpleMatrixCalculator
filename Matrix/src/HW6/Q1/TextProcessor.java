@@ -77,7 +77,7 @@ public class TextProcessor {
             return 3;
         if (string.contains("+")  && string.contains("X") && string.contains("Y"))
             return 4;
-        if (string.indexOf("-", string.indexOf("X") + 1) != -1  && string.contains("X") && string.contains("Y"))
+        if ((string.indexOf("-", string.indexOf("X") + 1) != -1 || string.indexOf("-", string.indexOf("Y") + 1) != -1)  && string.contains("X") && string.contains("Y"))
             return 5;
         if( ( !string.contains("Y") ) && ( !string.contains("X") ) )
             return -1;
@@ -99,7 +99,7 @@ public class TextProcessor {
         double flag = 1;
         if ((str.contains("X"))) {
             String tempString = "";
-            if (str.charAt(0) == '(') {
+            if (str.charAt(str.indexOf("X") - 1) == ')') {
                 for (int i = 2; str.charAt(i) != ')'; i++)
                     tempString += String.valueOf(str.charAt(i));
                 flag = -1;
@@ -115,7 +115,7 @@ public class TextProcessor {
                         tempString += String.valueOf(str.charAt(i));
             }
             if(tempString.length() == 0)
-                return 1;
+                return 1 * flag;
             result = Double.parseDouble(tempString) * flag;
             return result;
         }
@@ -149,7 +149,8 @@ public class TextProcessor {
                         if((tempString.charAt(i) >= '0' & tempString.charAt(i) <= '9') || tempString.charAt(i) == '.')
                             tempString2 += String.valueOf(tempString.charAt(i));
                     tempString = tempString2;
-                    //flag = -1;
+                    if(situationFinder(str) != 5)
+                        flag = -1;
                 }
                 else {
                     for (int i = str.indexOf("X") + 2 ; str.charAt(i) != 'Y'; i++)

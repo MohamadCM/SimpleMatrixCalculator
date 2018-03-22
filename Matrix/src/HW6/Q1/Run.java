@@ -19,6 +19,7 @@ public class Run {
         System.out.println("Please enter your polynomial expression (Use capital X and capital Y): ");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
+        str.replaceAll("\\s+","");
         double a = textProcessor.factorOfXFinder(str);
         double b = textProcessor.factorOfYFinder(str);
         switch (textProcessor.situationFinder(str))
