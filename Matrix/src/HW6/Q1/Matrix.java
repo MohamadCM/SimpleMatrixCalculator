@@ -155,4 +155,73 @@ public class Matrix {
         result.setMatrix(resultArrayList);
         return result;
     }
+
+    /**
+     * Gets the polynomial‬‬ ‫‪expression‬‬ and does the final calculations
+     * and prints result
+     * It works when the string is normal (X comes before Y)
+     * @param str is given polynomial‬‬ ‫‪expression‬‬
+     */
+    public static void finalCalculatorNormal(String str, Matrix X, Matrix Y)
+    {
+        TextProcessor textProcessor = new TextProcessor();
+        switch (textProcessor.situationFinder(str))
+        {
+            case (-1):
+                System.out.println("Wrong expression");
+                break;
+            case (2):
+                    Y.multiplyByNumber(textProcessor.factorOfYFinder("0X + " + str)).print();
+                break;
+            case (3):
+                if(X.multiply(Y) != null)
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).multiply(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
+                break;
+            case (4):
+                if(X.sum(Y) != null)
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
+                break;
+            case (5):
+                if(X.sum(Y) != null)
+                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(-textProcessor.factorOfYFinder(str))).print();
+                break;
+            default:
+                System.out.println("Wrong input!");
+        }
+    }
+
+    /**
+     * Gets the polynomial‬‬ ‫‪expression‬‬ and does the final calculations
+     * and prints result
+     * It works when the string is flipped (Y comes before X)
+     * @param str is given polynomial‬‬ ‫‪expression‬‬
+     */
+    public static void finalCalculatorFlipped(String str, Matrix X, Matrix Y) {
+        TextProcessor textProcessor = new TextProcessor();
+        switch (textProcessor.situationFinder(str)) {
+            case (-1):
+                System.out.println("Wrong expression");
+                break;
+            case (2):
+                Y.multiplyByNumber(textProcessor.factorOfYFinderFlipped(str)).print();
+                break;
+            case (1):
+                X.multiplyByNumber(textProcessor.factorOfXFinder(str)).print();
+                break;
+            case (3):
+                if (Y.multiply(X) != null)
+                    Y.multiplyByNumber(textProcessor.factorOfYFinderFlipped(str)).multiply(X.multiplyByNumber(textProcessor.factorOfXFinderFlipped(str))).print();
+                break;
+            case (4):
+                if (Y.sum(X) != null)
+                    Y.multiplyByNumber(textProcessor.factorOfYFinderFlipped(str)).sum(X.multiplyByNumber(textProcessor.factorOfXFinderFlipped(str))).print();
+                break;
+            case (5):
+                if (Y.sum(X) != null)
+                    Y.multiplyByNumber(textProcessor.factorOfYFinderFlipped(str)).sum(X.multiplyByNumber(-textProcessor.factorOfXFinderFlipped(str))).print();
+                break;
+            default:
+                System.out.println("Wrong input!");
+        }
+    }
 }

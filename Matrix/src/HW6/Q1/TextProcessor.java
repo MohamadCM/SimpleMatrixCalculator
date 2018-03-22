@@ -26,7 +26,7 @@ public class TextProcessor {
             tempString = scanner.nextLine();
             if (tempString.equals(""))
                 break;
-            tempString.replaceAll("\\s+","");
+            tempString.replaceAll("\\s+", "");
             str.add(tempString);
         }
         return str;
@@ -70,28 +70,28 @@ public class TextProcessor {
     /**
      * Gets the ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
      * and return an integer depending on ‫‪expression's situation
+     *
      * @param string is given ‫‪polynomial‬‬ ‫‪expression
      * @return int integer depending on situation of ‫‪polynomial‬‬ ‫‪expression
      */
     public int situationFinder(String string) {
         if (string.contains("*") && string.contains("X") && string.contains("Y"))
             return 3;
-        if (string.contains("+")  && string.contains("X") && string.contains("Y"))
+        if (string.contains("+") && string.contains("X") && string.contains("Y"))
             return 4;
-        if ((string.indexOf("-", string.indexOf("X") + 1) != -1 || string.indexOf("-", string.indexOf("Y") + 1) != -1)  && string.contains("X") && string.contains("Y"))
+        if ((string.indexOf("-", string.indexOf("X") + 1) != -1 || string.indexOf("-", string.indexOf("Y") + 1) != -1) && string.contains("X") && string.contains("Y"))
             return 5;
-        if( ( !string.contains("Y") ) && ( !string.contains("X") ) )
+        if ((!string.contains("Y")) && (!string.contains("X")))
             return -1;
-        if (! (string.contains("Y")))
+        if (!(string.contains("Y")))
             return 1;
-        if (! (string.contains("X")))
+        if (!(string.contains("X")))
             return 2;
         return 0;
     }
-
     /**
      * Gets the ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
-     * and return factor of X as a double value
+     * and return factor of X as a double value (in normal polynomial expression)
      * @param str is given ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
      * @return factor of X as a double
      */
@@ -104,18 +104,16 @@ public class TextProcessor {
                 for (int i = 2; str.charAt(i) != ')'; i++)
                     tempString += String.valueOf(str.charAt(i));
                 flag = -1;
-            }
-            else {
+            } else {
                 if (str.charAt(0) == '-') {
                     for (int i = 1; str.charAt(i) != 'X'; i++)
                         tempString += String.valueOf(str.charAt(i));
                     flag = -1;
-                }
-                else
+                } else
                     for (int i = 0; str.charAt(i) != 'X'; i++)
                         tempString += String.valueOf(str.charAt(i));
             }
-            if(tempString.length() == 0)
+            if (tempString.length() == 0)
                 return 1 * flag;
             result = Double.parseDouble(tempString) * flag;
             return result;
@@ -125,7 +123,39 @@ public class TextProcessor {
 
     /**
      * Gets the ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
-     * and return factor of Y as a double value
+     * and return factor of Y as a double value (in flipped polynomial expression)
+     * @param str is given ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
+     * @return factor of X as a double
+     */
+    public double factorOfYFinderFlipped(String str) {
+        double result;
+        double flag = 1;
+        if ((str.contains("Y"))) {
+            String tempString = "";
+            if (str.charAt(0) != 'Y' && str.charAt(str.indexOf("Y") - 1) == ')') {
+                for (int i = 2; str.charAt(i) != ')'; i++)
+                    tempString += String.valueOf(str.charAt(i));
+                flag = -1;
+            } else {
+                if (str.charAt(0) == '-') {
+                    for (int i = 1; str.charAt(i) != 'Y'; i++)
+                        tempString += String.valueOf(str.charAt(i));
+                    flag = -1;
+                } else
+                    for (int i = 0; str.charAt(i) != 'Y'; i++)
+                        tempString += String.valueOf(str.charAt(i));
+            }
+            if (tempString.length() == 0)
+                return 1 * flag;
+            result = Double.parseDouble(tempString) * flag;
+            return result;
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
+     * and return factor of Y as a double value (in normal polynomial expression)
      * Given str must have X character so that this method works correctly
      * (if no X available, we should put string like: 0X+bY)
      * @param str is given ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
@@ -152,6 +182,8 @@ public class TextProcessor {
                     tempString = tempString2;
                     if(situationFinder(str) != 5)
                         flag = -1;
+                    if(situationFinder(str) == 2)
+                        flag = 1;
                 }
                 else {
                     for (int i = str.indexOf("X") + 2 ; str.charAt(i) != 'Y'; i++)
@@ -170,6 +202,54 @@ public class TextProcessor {
         }
         return 0;
     }
+    /**
+     * Gets the ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
+     * and return factor of X as a double value (in flipped polynomial expression)
+     * Given str must have Y character so that this method works correctly
+     * (if no Y available, we should put string like: 0Y+bX)
+     * @param str is given ‫‪polynomial‬‬ ‫‪expression‬‬ as a String
+     * @return factor of Y as a double
+     */
+    public double factorOfXFinderFlipped(String str) {
+        double result;
+        double flag = 1;
+        if ((str.contains("X"))) {
+            String tempString = "";
+            if (str.charAt(str.indexOf("X") - 1) == ')') {
+                for (int i = str.indexOf("-", str.indexOf("(",str.indexOf("Y")) + 1) + 1 ; str.charAt(i) != ')'; i++)
+                    tempString += String.valueOf(str.charAt(i));
+                flag = -1;
+            }
+            else {
+                if (str.indexOf("-", str.indexOf("Y") + 1) != -1) {
+                    for (int i = str.indexOf("-", str.indexOf("Y") + 1) ; str.charAt(i) != 'X'; i++)
+                        tempString += String.valueOf(str.charAt(i));
+                    String tempString2 = "";
+                    for(int i = 0; i < tempString.length() ; i++)
+                        if((tempString.charAt(i) >= '0' & tempString.charAt(i) <= '9') || tempString.charAt(i) == '.')
+                            tempString2 += String.valueOf(tempString.charAt(i));
+                    tempString = tempString2;
+                    if(situationFinder(str) != 5)
+                        flag = -1;
+                }
+                else {
+                    for (int i = str.indexOf("Y") + 2 ; str.charAt(i) != 'X'; i++)
+                        tempString += String.valueOf(str.charAt(i));
+                    String tempString2 = "";
+                    for(int i = 0; i < tempString.length() ; i++)
+                        if((tempString.charAt(i) >= '0' & tempString.charAt(i) <= '9') || tempString.charAt(i) == '.')
+                            tempString2 += String.valueOf(tempString.charAt(i));
+                    tempString = tempString2;
+                }
+            }
+            if(tempString.length() == 0)
+                return 1 * flag;
+            result = Double.parseDouble(tempString) * flag;
+            return result;
+        }
+        return 0;
+    }
+
 
     /**
      * Checks the string, if X comes first return {@code true}

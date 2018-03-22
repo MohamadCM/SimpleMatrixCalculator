@@ -2,6 +2,13 @@ package HW6.Q1;
 
 import java.util.Scanner;
 
+/**
+ * This class is used to start programme,
+ * get matrices,
+ * and calls the calculators
+ * @author  Mohamad Chaman-Motlagh
+ * @version 1
+ */
 public class Run {
     public static void main(String[] args) {
         TextProcessor textProcessor = new TextProcessor();
@@ -20,34 +27,9 @@ public class Run {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         str.replaceAll("\\s+","");
-        switch (textProcessor.situationFinder(str))
-        {
-            case (-1):
-                System.out.println("Wrong expression");
-                break;
-            case (1):
-                X.multiplyByNumber(textProcessor.factorOfXFinder(str)).print();
-                break;
-            case (2):
-                if(str.charAt(0) == '-')
-                    Y.multiplyByNumber(-textProcessor.factorOfYFinder("0X  + " + str)).print();
-                else
-                    Y.multiplyByNumber(textProcessor.factorOfYFinder("0X + " + str)).print();
-                break;
-            case (3):
-                if(X.multiply(Y) != null)
-                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).multiply(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
-                break;
-            case (4):
-                if(X.sum(Y) != null)
-                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(textProcessor.factorOfYFinder(str))).print();
-                break;
-            case (5):
-                if(X.sum(Y) != null)
-                    X.multiplyByNumber(textProcessor.factorOfXFinder(str)).sum(Y.multiplyByNumber(-textProcessor.factorOfYFinder(str))).print();
-                break;
-            default:
-                System.out.println("Wrong input!");
-        }
+        if(textProcessor.xComesFirst(str))
+            Matrix.finalCalculatorNormal(str,X,Y);
+        else
+            Matrix.finalCalculatorFlipped(str,X,Y);
     }
 }
